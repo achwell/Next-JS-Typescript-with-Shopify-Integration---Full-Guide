@@ -1,38 +1,27 @@
-interface Person {
-    name: string
-    age: number
-}
 
-interface Student extends Person {
-    age: number
-}
+export default async function play() {
 
-interface PostGraduadeStudent extends Person {
-    age: number
-    projects: string[]
-}
+    type Greeting = { message: string }
 
-type StudentInfo<T extends any = Student> = T extends Student ? {
-    data: T
-    grades: number[]
-} : string
+    type InferHelloProps<T> = T extends () => Promise<{props: infer Props}> ? Props : never
 
-type Car = { engine: string }
-
-export default function play() {
-
-    function logStudentInfo(info: StudentInfo<Student>) {
-        console.log(info)
-        console.log(info)
+    const getHelloProps = async function() {
+        const greeting: Greeting = {message: "Hi!"}
+        return {
+            props: {
+                greeting,
+                data: {
+                    cars: ["car1", "car2"]
+                }
+            }
+        }
     }
 
-    const info = {
-        data: {
-            name: "Filip",
-            age: 30
-        },
-        grades: [1, 2, 3, 1]
+    function sayHello(props: InferHelloProps<typeof getHelloProps>) {
+        console.log(props.greeting)
     }
 
-    logStudentInfo(info)
+    const data = await getHelloProps()
+
+    sayHello(data.props)
 }
