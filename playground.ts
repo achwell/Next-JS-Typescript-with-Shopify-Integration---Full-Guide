@@ -1,46 +1,73 @@
-type Age = number
-
-interface iPerson {
-    name: string,
-    age?: Age
-}
-
-class Person {
+interface Person {
+    kind: "business" | "academic" | "otherType"
     name: string
-    age?: Age
-
-    constructor(name: string, age: Age) {
-        this.name = name
-        this.age = age
-    }
+    age: number
 }
 
-interface iPersonLoggerFn {
-    (name: string, age: Age): string
+interface BusinessPerson extends Person {
+    kind: "business"
+    salary: number
 }
 
-type PersonLoggerFn = (name: string, age?: Age) => string
+interface AcademicPerson extends Person {
+    kind: "academic"
+    publications: Array<string>
+}
+
+type Human = BusinessPerson | AcademicPerson | { kind: "otherType", special: string }
+
+type RaceCar = {
+    name: string,
+    maxSpeed: 200,
+    team: string
+}
+
+type CityCar = {
+    name: string,
+    maxSpeed: 100,
+    space: string
+}
+
+type Car = CityCar | RaceCar
 
 export default function play() {
-    const name = "Axel"
-    const age = 55
+    const car: RaceCar = {maxSpeed: 200, name: "Race Car", team: "ferari"}
+    const car2: CityCar = {maxSpeed: 100, name: "City Car", space: "masse"}
 
-    const person: Person = new Person("Axel", 55)
-
-    const person2: Person = {name:"p"}
-
-    const logPersonInfo: PersonLoggerFn = (personName: string, personAge: Age = 0): string => {
-        const info = `Name: ${personName}, age: ${personAge}`
-        console.log(info)
-        return info
+    function logPersonInfo(human: Human) {
+        switch (human.kind) {
+            case "academic":
+                console.log(human)
+                break;
+            case "business":
+                console.log(human)
+                break;
+            case "otherType":
+                console.log(human)
+                break;
+            default:
+                console.log(human)
+                break;
+        }
     }
 
-    function logPersonInfo2(person: Person) {
-        const info = `Name: ${person.name}, age: ${person.age}`
-        console.log(info)
-        return info
+    function logCarInfo(car: Car) {
+        console.log((car as RaceCar).team)
+        console.log((<CityCar>car).space)
+        console.log(car.name)
+        switch (car.maxSpeed) {
+            case 200:
+                console.log(car.team)
+                break
+            case 100:
+                console.log(car.space)
+                break
+            default:
+                console.log(car)
+        }
     }
 
-    const log: string = logPersonInfo(name)
-    logPersonInfo2(person)
+
+    logCarInfo(car)
+    logCarInfo(car2)
 }
