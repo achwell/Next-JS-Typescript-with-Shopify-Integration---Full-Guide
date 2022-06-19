@@ -1,38 +1,38 @@
 interface Person {
-    kind: "business" | "academic" | "otherType"
     name: string
     age: number
 }
 
-interface BusinessPerson extends Person {
-    kind: "business"
-    salary: number
+interface Student extends Person {
+    age: number
 }
 
-interface AcademicPerson extends Person {
-    kind: "academic"
-    publications: Array<string>
+interface PostGraduadeStudent extends Person {
+    age: number
+    projects: string[]
 }
 
-interface Person {
-    prop1: string
-    prop2: number
-}
+type StudentInfo<T extends any = Student> = T extends Student ? {
+    data: T
+    grades: number[]
+} : string
 
-type Noop = () => any
-type Noop2 = () => void
+type Car = { engine: string }
 
 export default function play() {
 
-    function fn1(x: Noop): void {
-        const result = x()
-        result()
+    function logStudentInfo(info: StudentInfo<Student>) {
+        console.log(info)
+        console.log(info)
     }
 
-    function fn2(x: Noop2): void {
-        const result = x()
-        result()
+    const info = {
+        data: {
+            name: "Filip",
+            age: 30
+        },
+        grades: [1, 2, 3, 1]
     }
 
-
+    logStudentInfo(info)
 }
