@@ -1,9 +1,12 @@
 import React from "react"
 import type {InferGetStaticPropsType} from "next"
-import getAllProducts from "@framework/product/get-all-products"
+import getAllproducts from "@framework/product/get-all-products"
+import {getConfig} from "@framework/api/config"
 
 export async function getStaticProps() {
-    const products = await getAllProducts()
+    const config = getConfig()
+    const products = await getAllproducts(config)
+
     return {
         props: {
             products
