@@ -379,7 +379,7 @@ const resolvers = {
         }
       })
 
-      checkout.totalPriceV2.amount = getTotalPrice(checkout.lineItems) || 0;;
+      checkout.totalPriceV2.amount = getTotalPrice(checkout.lineItems) || 0;
       checkout.subtotalPriceV2.amount = getTotalPrice(checkout.lineItems) || 0;
 
       await saveData({...data, checkout})
@@ -398,11 +398,9 @@ const resolvers = {
       }
 
       function findVariantsProduct(products, variantId) {
-        const product = products.filter(p => {
+        return products.filter(p => {
           return p.variants.find(v => v.id === variantId)
         })[0] || null
-
-        return product
       }
 
       if (checkout.lineItems && checkout.lineItems.length > 0) {

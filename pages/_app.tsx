@@ -1,16 +1,20 @@
-import { FC } from "react"
+import "@assets/main.scss"
+import 'keen-slider/keen-slider.min.css'
 import { AppProps } from "next/app"
-import "@assets/main.css"
+import {FC, PropsWithChildren} from "react"
+import { UIProvider } from "@components/ui/context"
 
-const Noop: FC = ({children}) => <>{children}</>
+const Noop: FC<PropsWithChildren> = ({children}) => <>{children}</>
 
 function MyApp({Component, pageProps}: AppProps & {Component: {Layout: FC}}) {
     const Layout = Component.Layout ?? Noop
 
     return (
-        <Layout>
-            <Component {...pageProps} />
-        </Layout>
+        <UIProvider>
+            <Layout>
+                <Component {...pageProps} />
+            </Layout>
+        </UIProvider>
     )
 }
 

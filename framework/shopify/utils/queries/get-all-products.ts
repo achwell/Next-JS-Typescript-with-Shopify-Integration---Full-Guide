@@ -41,4 +41,5 @@ const getAllProductsQuery = `
     }
   }
 `
+
 export default getAllProductsQuery

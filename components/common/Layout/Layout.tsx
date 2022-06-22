@@ -1,13 +1,29 @@
-import { FC } from "react"
-import s from "./Layout.module.css"
+import {FC, PropsWithChildren} from "react"
+import s from "./Layout.module.scss"
+import { Footer, Navbar } from "@components/common"
+import { Sidebar } from "@components/ui"
+import { CartSidebar } from "@components/cart"
+import { useUI } from "@components/ui/context"
+import { ApiProvider } from "@framework"
 
-const Layout: FC = ({children}) => {
+const Layout: FC<PropsWithChildren> = ({children}) => {
+    const { isSidebarOpen, closeSidebar } = useUI()
+
     return (
-        <div className={s.root}>
-            <main className="fit">
-                { children }
-            </main>
-        </div>
+        <ApiProvider>
+            <div className={s.root}>
+                <Navbar />
+                <Sidebar
+                    onClose={closeSidebar}
+                    isOpen={isSidebarOpen}>
+                    <CartSidebar />
+                </Sidebar>
+                <main className="fit">
+                    { children }
+                </main>
+                <Footer />
+            </div>
+        </ApiProvider>
     )
 }
 

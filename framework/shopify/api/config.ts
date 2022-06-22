@@ -2,7 +2,7 @@ import { fetchApi } from "../utils"
 import {ApiConfig} from "@common/types/api"
 
 class Config {
-    private config: ApiConfig
+    private readonly config: ApiConfig
 
     constructor(config: ApiConfig) {
         this.config = config
